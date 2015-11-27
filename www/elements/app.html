@@ -1,0 +1,79 @@
+<polymer-element name="my-app">
+  <template>
+    
+  	<link rel="stylesheet" type="text/css" href="../styles/main.css" />
+    <style>
+		:host {
+			display: block;
+			height: 100%;
+		}
+
+    </style>
+
+
+	<core-scaffold mode="seamed" id="scaffold">
+
+		<div tool style="width:100%;" horizontal layout center>
+		
+			<template if="{{globals.screen_orientation=='portrait'}}">
+				<img id="top_logo" src="../images/tiina/logo on black.png"/>
+			</template>
+			
+				<div flex layout horizontal center center-justified>
+					<template if="{{globals.short_landscape}}">
+						{{globals.title_bar_text}}
+						<core-icon-button mini icon="help" on-tap="{{showSpeechBubble}}"></core-icon-button>
+					</template>
+				</div>
+			
+			<!-- <ft-user-login-inputs></ft-user-login-inputs> -->
+			
+				<!-- login button -->
+			<paper-menu-button on-core-select="{{loginAs}}">
+				<paper-icon-button icon="social:person"></paper-icon-button>
+				<template if="{{globals.user}}">
+					<img src="{{globals.user.picture_url}}" id="avatar">
+				</template>
+				<paper-dropdown class="dropdown">
+					<core-menu class="menu">
+
+						<template repeat="{{id in globals.user_keys}}">
+							<core-item label="{{globals.users[id]['first_names']}}" user="{{id}}" class="login_as_menu_items"></core-item>
+						</template>
+
+					</core-menu>
+				</paper-dropdown>
+			</paper-menu-button>
+			
+			<template if="{{!globals.authData}}">
+				<span horizontal center center-justified layout class="login_oval" on-tap="{{toggleLogin}}">Login</span>
+			</template>
+			  
+			<template if="{{globals.authData}}">
+				<span horizontal center center-justified layout class="login_oval" on-tap="{{logout}}">Logout</span>
+			</template>
+			
+		</div>
+
+		<div id="content" fit>
+			
+			<app-router>			 
+				<app-route path="/**/www/index.html" import="elements/msp-test.html" element="msp-test"></app-route>
+				<app-route path="/" import="msp-test.html" element="msp-test"></app-route>			
+			</app-router>
+		</div>
+
+    </core-scaffold>
+	 
+  </template>
+  <script>
+	var nucleus;
+    Polymer({
+		ready: function() {
+
+		
+		}, 
+
+	});
+  </script>
+</polymer-element>
